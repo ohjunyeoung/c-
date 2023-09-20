@@ -19,4 +19,9 @@ c언어에서 다루는 문자 : 아스키코드 표에는 숫자로 표현
 
 묵시적 형 변환: char -> short -> int -> unsigned -> long -> float -> double 
 표현 범위가 좁은 데이터 타입에서 넓은 데이터 타입으로의 변환만 허용된다. 
+
+표준 입출력 함수의 종류 : scanf(), printf(), getchar(), putchar(), gets(),puts()
+
+
+
 (최지환)
