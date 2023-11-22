@@ -189,3 +189,22 @@ int main(void)
 
 	return 0;
 }
+
+<열거형 사용하기>
+int main(void)
+{
+	enum{yellow, red, blue, green} color;
+	printf("원하는 색을 입력하세요.\n");
+	printf("0번: 노란색, 1번: 빨간색\n");
+	printf("2번: 파란색, 3번: 초록색\n");
+	scanf("%d", &color);
+
+	if (color == yellow) printf("노란색입니다.\n");
+	else if (color == red) printf("빨간색입니다.\n");
+	else if (color == blue) printf("파란색입니다.\n");
+	else if (color == green) printf("초록색입니다.\n");
+
+	return 0;
+}
+
+enum{yellow, red, blue= 10, green} color; -> 결과: 10을 입력하면 파란색, 11을 입력하면 초록색이 나온다.
