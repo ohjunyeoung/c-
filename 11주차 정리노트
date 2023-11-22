@@ -1,0 +1,191 @@
+10장.
+배열 포인터: 문자열을 동시에 여러 개 만들어야 하는 경우 유용
+{
+	char* pC = "C programming";
+	printf("문자열을 변환기호를 이용해서 출력\n");
+	printf("%s\n", pC);
+	printf("반복문을 이용해 한 글자씩 출력\n");
+	while (*pC)
+		printf("%c", *pC++);
+	printf("\n");
+
+	return 0;
+}
+
+-불필요한 메모리 낭비를 막을 수 있기 때문에 배열의 크기를 초기에 지정하지 않아도 됨.
+-2차원 배열을 이용하면 문자가 가장 많은 문자열이 기준이 되기 때문에 메모리 낭비가 발생.
+{
+	char* pStr[] = { "english", "math", "korean" };
+	char subject[][8] = { "english", "math", "korean" };
+	int i;
+	printf("포인터 배열을 이용해서 문자열을 출력합니다.\n");
+	for (i = 0; i < 3; i++)
+		printf("pStr[%d] = %s\n", i, pStr[i]);
+
+	printf("2차원 배열을 이용해서 문자열을 출력합니다.\n");
+	for (i = 0; i < 3; i++)
+		printf("subject[%d] = %s\n", i, subject[i]);
+
+	return 0;
+}
+
+<소문자를 대문자로 만들기>
+{
+	char* pC = "c language";
+
+	while (*pC)
+	{
+		printf("%c", *pC - 32);
+		pC++;
+	}
+
+	printf("\n");
+	return 0;
+}
+
+문자 처리 함수: 시스템에서 문자를 처리하는 함수들을 헤더파일인 ctype.h 파일에 만들어 놓음.
+<문자열의 크기 알아내기>
+{
+	int len;
+	char str[] = "c language and data structure";
+	len = strleng(str);
+	printf("문자열의 크기는 %d다.\n", len);
+	return 0;
+}
+
+int strleng(char* ch)
+{
+	int index;
+	for (index = 0; *(ch + index) != '\0'; index++);
+
+	return index;
+}
+
+문자열 처리 함수: 시스템에서 문자열을 처리하는 함수들을 헤더파일인 string.h 파일에 만들어 놓음.
+size_t strlen(const char*): strlen()함수는 문자열을 입력받아 \0을 제외한 문자열의 크기를 반환
+int strcmp(const char* s1, const char* s2): strcmp()함수는 문자열 2개를 입력받아 두 문자열을 비교, 두 문자열이 같으면 0을 반환하고, (s1<s2)이면 -1을, 반대이면 1을 반환
+char* strecpy(char* s1, const char* s2): strcpy()함수는 문자열 2개를 입력받아 첫 번째 문자열에 두 번째 문자열 복사, 첫 번째 문자열이 두 번째 문자열보다 크기(길이)가 크거나 같아야 함.
+char* strcat(char* s1, const char* s2): strcat()함수는 문자열 2개를 입력받아 첫 번째 문자열에 두 번째 문자열 연결, 첫 번째 문자열의 크기가 두 문자열을 합한 크기보다 크거나 같아야 함.
+
+11장.
+구조체: 서로 다른 자료형을 하나의 자료로 구조화한 자료형, 키워드 struct를 사용하여 정의, struct안의 각 구성 요소는 멤버라 부르며 중괄호({})안에 정의, 마지막 중괄호(}) 다음에 반드시 세미콜론(;)을 넣어야함.
+<구조체의 메모리 크기 확인하기>
+struct list {
+	char name;
+	char gender;
+	int age;
+};
+
+int main(void)
+{
+	struct list st1 = { 'T', 'M', 25 };
+
+	printf("구조체 list의 크기는 %d이다.\n", sizeof(struct list));
+	printf("구조체 객체 st1의 크기는 %d이다.\n", sizeof(st1));
+
+	return 0;
+}
+
+-구조체를 정의하면서 변수를 선언하는 방법-
+students구조체의 정의와 선언 1: 정의와 동시에 선언.
+students구조체의 정의와 선언 2: 구조체명을 기록하지 않으면 변수를 선언할 때마다 구조체의 정의 부분을 다시 작성해야 함.
+구조체 멤버 연산자: 구조체 멤버 변수에 접근하려면 도트(.) 연산자를 사용
+<도트 연산자를 이용하여 구조체 접근하기>
+struct list {
+	char name;
+	char gender;
+	int age;
+};
+
+int main(void)
+{
+	struct list st1, st2;
+	st1.name = 'T';
+	st1.gender = 'M';
+	st1.age = 25;
+
+	st2.name = 'S';
+	st2.gender = 'F';
+	st2.age = 28;
+
+	printf("이름 성별 나이\n");
+	printf("---------------\n");
+	printf("  %c    %c   %d\n", st1.name, st1.gender, st1.age);
+	printf("  %c    %c   %d\n", st2.name, st2.gender, st2.age);
+
+	return 0;
+ 
+}
+
+<구조체에서 할당 연산자 사용하기>
+struct list {
+	char name;
+	char gender;
+	int age;
+};
+
+int main(void)
+{
+	struct list st1 = { 'T', 'M', 25 };
+	struct list st2, st3 = { 'P', 'F', 30 };
+
+	st2 = st1;
+	st3.name = st1.name;
+	st3.gender = st1.gender;
+
+	printf("     이름 성별 나이\n");
+	printf("----------------------\n");
+	printf("st1  %c     %c     %d\n", st1.name, st1.gender, st1.age);
+	printf("st2  %c     %c     %d\n", st2.name, st2.gender, st2.age);
+	printf("st3  %c     %c     %d\n", st3.name, st3.gender, st3.age);
+
+	return 0;
+}
+
+typedef: 자료형을 재정의하는 키워드
+도트(.) 연산자: 일반 변수 형태로 정의한 구조체의 멤버 변수에 접근
+화살표(->) 연산자: 포인터 변수 형태로 정의한 구조체의 멤버 변수에 접근
+<구조체 포인터를 이용하여 구조체 멤버 접근하기>
+struct ThreeDime {
+	double x;
+	double y;
+	double z;
+};
+
+typedef struct ThreeDime ThreeDime;
+
+int main(void)
+{
+
+	ThreeDime A1 = { 3, 1, 8 };
+
+	ThreeDime* pA1 = &A1;
+
+	printf("3차원 점 A1의 x: %.2lf, y: %.2lf, z: %.2lf이다.\n", pA1->x, pA1->y, pA1->z);
+
+	return 0;
+}
+
+<구조체를 인자로 받는 함수> (45~52)
+D1 = Distance1(A1);
+
+D2 = Distance2(A1, A2);
+
+A3 = SymOri(A1);
+
+열거형(enum): 순서가 있고 새로운 값(상수)을 가질 수 있는 사용자 정의 자료
+int main(void)
+{
+	enum{yellow, red, blue, green} color;
+	printf("원하는 색을 입력하세요.\n");
+	printf("0번: 노란색, 1번: 빨간색\n");
+	printf("2번: 파란색, 3번: 초록색\n");
+	scanf("%d", &color);
+
+	if (color == yellow) printf("노란색입니다.\n");
+	else if (color == red) printf("빨간색입니다.\n");
+	else if (color == blue) printf("파란색입니다.\n");
+	else if (color == green) printf("초록색입니다.\n");
+
+	return 0;
+}
